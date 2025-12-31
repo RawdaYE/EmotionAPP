@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Recognition App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 Multimodal Emotion Recognition</h1>
+            <p class="subtitle">Analyze emotions from audio and text using AI</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="audio">Audio Only</button>
+            <button class="tab-button" data-tab="text">Text Only</button>
+            <button class="tab-button" data-tab="multimodal">Multimodal (Audio + Text)</button>
+        </div>
+
+        <!-- Audio Only Tab -->
+        <div id="audio-tab" class="tab-content active">
+            <div class="card">
+                <h2>Audio Emotion Recognition</h2>
+                <div class="recording-controls">
+                    <button id="audio-record-btn" class="record-btn" onclick="startRecording('audio')">
+                        <span class="icon">🎙️</span> Record
+                    </button>
+                    <button id="audio-stop-btn" class="stop-btn" onclick="stopRecording('audio')"
+                        style="display: none;">
+                        <span class="icon">⏹️</span> Stop
+                    </button>
+                    <div id="audio-recording-indicator" class="recording-indicator" style="display: none;">
+                        <div class="pulse-dot"></div> Recording...
+                    </div>
+                    <audio id="audio-preview" controls style="display: none; width: 100%; margin-top: 20px;"></audio>
+                </div>
+                <button class="predict-button" onclick="predictAudio()" id="audio-predict-btn" disabled>
+                    Analyze Audio
+                </button>
+                <div id="audio-result" class="result-container"></div>
+            </div>
+        </div>
+
+        <!-- Text Only Tab -->
+        <div id="text-tab" class="tab-content">
+            <div class="card">
+                <h2>Text Emotion Recognition</h2>
+                <textarea id="text-input"
+                    placeholder="Enter text to analyze emotion...&#10;&#10;Example: I am so happy today! This is amazing!"
+                    rows="6"></textarea>
+                <button class="predict-button" onclick="predictText()" id="text-predict-btn">
+                    Analyze Text
+                </button>
+                <div id="text-result" class="result-container"></div>
+            </div>
+        </div>
+        <!-- Multimodal Tab -->
+        <div id="multimodal-tab" class="tab-content">
+            <div class="card">
+                <h2>Multimodal Emotion Recognition</h2>
+                <p class="info-text">Combine audio and text for more accurate predictions</p>
+
+                <div class="form-group">
+                    <label>Audio File</label>
+                    <div class="recording-controls">
+                        <button id="multimodal-record-btn" class="record-btn" onclick="startRecording('multimodal')">
+                            <span class="icon">🎙️</span> Record & Transcribe
+                        </button>
+                        <button id="multimodal-stop-btn" class="stop-btn" onclick="stopRecording('multimodal')"
+                            style="display: none;">
+                            <span class="icon">⏹️</span> Stop
+                        </button>
+                        <div id="multimodal-recording-indicator" class="recording-indicator" style="display: none;">
+                            <div class="pulse-dot"></div> Recording...
+                        </div>
+                        <audio id="multimodal-audio-preview" controls
+                            style="display: none; width: 100%; margin-top: 20px;"></audio>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Text Input</label>
+                    <textarea id="multimodal-text-input" placeholder="Enter the text corresponding to the audio..."
+                        rows="4"></textarea>
+                </div>
+
+                <button class="predict-button" onclick="predictMultimodal()" id="multimodal-predict-btn" disabled>
+                    Analyze Multimodal
+                </button>
+                <div id="multimodal-result" class="result-container"></div>
+            </div>
+        </div>
+
+        <div class="loading-overlay" id="loading-overlay" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
